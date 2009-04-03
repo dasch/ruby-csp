@@ -14,16 +14,24 @@ module CSP
     def start(*processes)
       processes.each do |process|
         callcc do |cont|
-          scheduler.enqueue(cont)
+          enqueue(cont)
           process.start
         end
       end
 
-      scheduler.yield
+      CSP.run
     end
 
     def yield
       scheduler.yield
+    end
+
+    def run
+      scheduler.run
+    end
+
+    def enqueue(cont)
+      scheduler.enqueue(cont)
     end
 
   end

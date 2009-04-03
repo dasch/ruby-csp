@@ -11,8 +11,15 @@ module CSP
       @ready << cont
     end
 
-    def yield
+    def run
       schedule until @ready.empty?
+    end
+
+    def yield
+      callcc do |cont|
+        enqueue(cont)
+        run
+      end
     end
 
     def schedule

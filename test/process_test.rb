@@ -26,7 +26,7 @@ class ProcessTest < Test::Unit::TestCase
     CSP.start(p1, p2)
   end
 
-  should_eventually "send multiple values over channels" do
+  should "send multiple values over channels" do
     a = []
     c = CSP::Channel.new
 

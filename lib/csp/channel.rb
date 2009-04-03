@@ -16,7 +16,7 @@ module CSP
         @readers << cont
 
         if @writers.empty?
-          CSP.yield
+          CSP.run
         else
           @writers.shift.call
         end
@@ -27,11 +27,14 @@ module CSP
       if @readers.empty?
         callcc do |cont|
           @writers << cont
-          CSP.yield
+          CSP.run
         end
       end
 
-      @readers.shift.call(value)
+      callcc do |cont|
+        CSP.enqueue(cont)
+        @readers.shift.call(value)
+      end
     end
 
   end

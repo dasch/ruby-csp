@@ -12,8 +12,6 @@ module CSP
       @block.call
     end
 
-    alias_method :call, :start
-
   end
 
 end

@@ -23,6 +23,7 @@ class ProcessTest < Test::Unit::TestCase
     p2 = CSP::Process.new { assert_equal 42, c.read }
 
     CSP.start(p2, p1)
+    CSP.start(p1, p2)
   end
 
   should_eventually "send multiple values over channels" do

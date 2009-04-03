@@ -12,12 +12,12 @@ module CSP
     end
 
     def yield
-      raise RuntimeError.new("Cannot yield; ready queue is empty") if @ready.empty?
-      @ready.shift.call
+      schedule until @ready.empty?
     end
 
-    def run
-      self.yield until @ready.empty?
+    def schedule
+      raise RuntimeError.new("Cannot yield; ready queue is empty") if @ready.empty?
+      @ready.shift.call
     end
 
   end

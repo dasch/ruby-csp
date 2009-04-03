@@ -9,7 +9,6 @@ module CSP
     def initialize
       @readers = []
       @writers = []
-      @value = nil
     end
 
     def read
@@ -22,8 +21,6 @@ module CSP
           @writers.shift.call
         end
       end
-
-      return @value
     end
 
     def write(value)
@@ -34,8 +31,7 @@ module CSP
         end
       end
 
-      @value = value
-      @readers.shift.call
+      @readers.shift.call(value)
     end
 
   end

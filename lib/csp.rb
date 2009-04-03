@@ -2,6 +2,7 @@
 require "csp/scheduler"
 require "csp/channel"
 require "csp/process"
+require "csp/choice"
 
 module CSP
 

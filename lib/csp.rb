@@ -16,7 +16,7 @@ module CSP
       processes.each do |process|
         callcc do |cont|
           enqueue(cont)
-          process.start
+          process.call
         end
       end
 

@@ -8,7 +8,7 @@ module CSP
       @block = block
     end
 
-    def start
+    def call
       @block.call
     end
 

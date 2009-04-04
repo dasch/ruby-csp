@@ -28,6 +28,17 @@ class ChannelTest < Test::Unit::TestCase
       CSP.start(p2, p1)
     end
 
+    should "iterate over received values" do
+      count = 0
+
+      p1 = CSP::Process.new { @channel.each {|msg| count += 1; assert_equal 42, msg } }
+      p2 = CSP::Process.new { 2.times { @channel.write(42) } }
+
+      CSP.start(p1, p2)
+
+      assert_equal 2, count
+    end
+
   end
 
 end

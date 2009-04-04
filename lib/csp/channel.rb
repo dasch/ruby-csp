@@ -6,6 +6,8 @@ module CSP
 
   class Channel
 
+    include Enumerable
+
     def initialize
       @readers = []
       @writers = []
@@ -49,6 +51,10 @@ module CSP
       end
 
       target.call(value)
+    end
+
+    def each
+      yield read while true
     end
 
   end

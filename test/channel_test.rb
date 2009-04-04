@@ -7,26 +7,27 @@ require 'lib/csp'
 
 class ChannelTest < Test::Unit::TestCase
 
-  should "send over channels" do
-    c = CSP::Channel.new
+  context "A CSP channel" do
 
-    p1 = CSP::Process.new { c.write(42) }
-    p2 = CSP::Process.new { assert_equal 42, c.read }
+    setup do
+      @channel = CSP::Channel.new
+    end
 
-    CSP.start(p2, p1)
-    CSP.start(p1, p2)
-  end
+    should "send over channels" do
+      p1 = CSP::Process.new { @channel.write(42) }
+      p2 = CSP::Process.new { assert_equal 42, @channel.read }
 
-  should "send multiple values over channels" do
-    a = []
-    c = CSP::Channel.new
+      CSP.start(p2, p1)
+      CSP.start(p1, p2)
+    end
 
-    p1 = CSP::Process.new { [1, 2, 3].each {|i| c.write(i) } }
-    p2 = CSP::Process.new { 3.times { a << c.read } }
+    should "send multiple values over channels" do
+      p1 = CSP::Process.new { [1, 2, 3].each {|i| @channel.write(i) } }
+      p2 = CSP::Process.new { [1, 2, 3].each {|i| assert_equal i, @channel.read } }
 
-    CSP.start(p2, p1)
+      CSP.start(p2, p1)
+    end
 
-    assert_equal [1, 2, 3], a
   end
 
 end

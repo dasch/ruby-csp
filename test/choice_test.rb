@@ -7,29 +7,42 @@ require 'lib/csp'
 
 class ProcessTest < Test::Unit::TestCase
 
-  should "select between multiple channels" do
-    c1 = CSP::Channel.new
-    c2 = CSP::Channel.new
+  context "A choice of guards" do
 
-    p1 = CSP::Process.new { c1.write(42) while true }
+    should "select between multiple channels" do
+      c1 = CSP::Channel.new
+      c2 = CSP::Channel.new
 
-    CSP.start(p1)
+      p1 = CSP::Process.new { c1.write(42) while true }
 
-    assert_equal 42, CSP.select(c1, c2)
-    assert_equal 42, CSP.select(c2, c1)
-  end
+      CSP.start(p1)
 
-  should "select between multiple channels with decreasing priority" do
-    c1 = CSP::Channel.new
-    c2 = CSP::Channel.new
+      assert_equal 42, CSP.select(c1, c2)
+      assert_equal 42, CSP.select(c2, c1)
+    end
 
-    p1 = CSP::Process.new { c1.write(42) while true }
-    p2 = CSP::Process.new { c2.write(19) while true }
+    should "select between multiple channels with decreasing priority" do
+      c1 = CSP::Channel.new
+      c2 = CSP::Channel.new
 
-    CSP.start(p1, p2)
+      p1 = CSP::Process.new { c1.write(42) while true }
+      p2 = CSP::Process.new { c2.write(19) while true }
 
-    assert_equal 42, CSP.select(c1, c2)
-    assert_equal 19, CSP.select(c2, c1)
+      CSP.start(p1, p2)
+
+      assert_equal 42, CSP.select(c1, c2)
+      assert_equal 19, CSP.select(c2, c1)
+    end
+
+    should "skip if no previous guards was ready" do
+      c1 = CSP::Channel.new
+      c2 = CSP::Channel.new
+
+      CSP.select(c1, c2, CSP::SKIP)
+
+      assert true
+    end
+
   end
 
 end

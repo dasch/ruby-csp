@@ -1,7 +1,4 @@
 
-
-require 'lib/csp/scheduler'
-
 module CSP
 
   class Channel

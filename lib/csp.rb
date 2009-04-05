@@ -15,10 +15,7 @@ module CSP
 
     def start(*processes)
       processes.each do |process|
-        callcc do |cont|
-          enqueue(cont)
-          process.call
-        end
+        process.start
       end
 
       CSP.run

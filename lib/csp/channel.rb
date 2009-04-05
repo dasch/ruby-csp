@@ -32,7 +32,7 @@ module CSP
       end
     end
 
-    def write(value)
+    def write(message)
       if @readers.empty?
         callcc do |cont|
           @writers << cont
@@ -42,7 +42,7 @@ module CSP
 
       callcc do |cont|
         CSP.enqueue(cont)
-        @readers.shift.call(value)
+        @readers.shift.call(message)
       end
     end
 

@@ -39,6 +39,13 @@ class ChannelTest < Test::Unit::TestCase
       assert_equal 2, count
     end
 
+    should "send multiple messages with the << operator" do
+      p1 = CSP::Process.new { @channel << 42 << 19 }
+      p2 = CSP::Process.new { [42, 19].each {|msg| assert_equal msg, @channel.read } }
+
+      CSP.start(p1, p2)
+    end
+
   end
 
 end

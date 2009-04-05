@@ -46,6 +46,11 @@ module CSP
       end
     end
 
+    def << message
+      write(message)
+      return self
+    end
+
     def each
       yield read while true
     end

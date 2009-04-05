@@ -13,15 +13,25 @@ module CSP
       @writers = []
     end
 
-    def read
-      callcc do |cont|
+    def read(options = {})
+      message = callcc do |cont|
         @readers << cont
 
         if @writers.empty?
-          CSP.run
+          if options[:callback]
+            return
+          else
+            CSP.run
+          end
         else
           @writers.shift.call
         end
+      end
+
+      if options[:callback]
+        options[:callback].call(message)
+      else
+        return message
       end
     end
 
@@ -37,20 +47,6 @@ module CSP
         CSP.enqueue(cont)
         @readers.shift.call(value)
       end
-    end
-
-    def read_optionally(target)
-      value = callcc do |cont|
-        @readers << cont
-
-        if @writers.empty?
-          return
-        else
-          @writers.shift.call
-        end
-      end
-
-      target.call(value)
     end
 
     def each

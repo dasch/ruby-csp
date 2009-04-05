@@ -4,7 +4,7 @@ module CSP
   def self.select(*options)
     callcc do |cont|
       options.each do |option|
-        option.read_optionally(cont)
+        option.read(:callback => cont)
       end
       CSP.run
     end

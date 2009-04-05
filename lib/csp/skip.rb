@@ -5,8 +5,8 @@ module CSP
 
     class << self
 
-      def read_optionally(cont)
-        cont.call
+      def read(options = {})
+        options[:callback] && options[:callback].call
       end
 
     end

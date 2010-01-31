@@ -12,6 +12,7 @@ module CSP
       @block.call
     end
 
+    # Start the process.
     def start
       callcc do |cont|
         CSP.enqueue(cont)

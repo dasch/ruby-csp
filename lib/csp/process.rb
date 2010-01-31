@@ -19,6 +19,13 @@ module CSP
       end
     end
 
+    # Create and start a new CSP process.
+    def self.start(&block)
+      process = new(&block)
+      process.start
+      process
+    end
+
   end
 
 end

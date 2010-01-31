@@ -1,8 +1,5 @@
 
-require 'rubygems'
-require 'test/unit'
-require 'shoulda'
-require 'lib/csp'
+require 'test/strap'
 
 
 class ChannelTest < Test::Unit::TestCase

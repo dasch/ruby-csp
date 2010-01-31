@@ -1,2 +1,4 @@
 csp.gemspec
 pkg
+.yardoc
+doc

@@ -9,10 +9,6 @@ module CSP
 
   class << self
 
-    def scheduler
-      @scheduler ||= CSP::Scheduler.new
-    end
-
     def start(*processes)
       processes.each do |process|
         process.start
@@ -31,6 +27,12 @@ module CSP
 
     def enqueue(cont)
       scheduler.enqueue(cont)
+    end
+
+    private
+
+    def scheduler
+      @scheduler ||= CSP::Scheduler.new
     end
 
   end

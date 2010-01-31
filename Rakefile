@@ -15,6 +15,7 @@ begin
     gemspec.homepage = "http://github.com/dasch/ruby-csp"
     gemspec.authors = ["Daniel Schierbeck"]
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler not available. Install it with: gem install jeweler"
 end

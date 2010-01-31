@@ -4,5 +4,5 @@ require 'csp'
 
 # Prints "Hello, World!" to stdout.
 chan = CSP::Channel.new
-CSP::Process.new { puts(chan.read) }.start
-CSP::Process.new { chan << "Hello, World!" }.start
+CSP::Process.start { puts(chan.read) }
+CSP::Process.start { chan << "Hello, World!" }

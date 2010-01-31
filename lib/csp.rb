@@ -17,6 +17,7 @@ module CSP
       CSP.run
     end
 
+    # Yield execution to another process.
     def yield
       scheduler.yield
     end

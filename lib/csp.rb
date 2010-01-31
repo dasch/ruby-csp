@@ -4,6 +4,7 @@ require "csp/channel"
 require "csp/process"
 require "csp/choice"
 require "csp/skip"
+require "csp/stdio"
 
 module CSP
 

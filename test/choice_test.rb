@@ -40,6 +40,18 @@ class ProcessTest < Test::Unit::TestCase
       assert true
     end
 
+    should "use correct callbacks" do
+      c1 = CSP::Channel.new
+      c2 = CSP::Channel.new
+
+      CSP::Process.start { c1 << 42 }
+
+      CSP.choose do |c|
+        c.when(c2) { assert false }
+        c.when(c1) {|value| assert_equal 42, value }
+      end
+    end
+
   end
 
 end

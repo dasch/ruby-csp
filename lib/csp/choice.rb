@@ -21,4 +21,26 @@ module CSP
     end
   end
 
+  def self.choose(&block)
+    Choice.new(&block).choose
+  end
+
+  class Choice
+    def initialize
+      @options = {}
+      yield self if block_given?
+    end
+
+    def when(opt, &block)
+      @options[opt] = block
+    end
+
+    def choose
+      @options.each do |opt, block|
+        opt.read(:callback => block)
+      end
+      CSP.run
+    end
+  end
+
 end
